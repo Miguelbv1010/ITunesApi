@@ -1,44 +1,56 @@
-import { useState, useEffect } from 'react'
-import './style.css'
+import { useState, useEffect } from 'react';
+import Filtro from '../Filtro';
+import { useNavigate } from "react-router-dom";
+import './style.css';
 
 function Lista() {
   const [data, setData] = useState([]);
-  const [busqueda, setBusqueda] = useState('beatles');
+  const [tipoSeleccionado, setTipoSeleccionado] = useState('All');
+  const [busqueda, setBusqueda] = useState(''); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     const obtenerDatos = async () => {
-      const res = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(busqueda)}&entity=song&limit=20`);
-      const json = await res.json();
-      setData(json.results);
+      if (busqueda.length >= 1) {
+        const tipo = tipoSeleccionado !== 'All' ? `&media=${tipoSeleccionado}` : '';
+        const res = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(busqueda)}${tipo}&limit=30`);
+        const json = await res.json();
+        setData(json.results);
+      }
     };
 
-    if (busqueda.length >= 3) {
-      obtenerDatos();
-    }
-  }, [busqueda]);
+    obtenerDatos();
+  }, [tipoSeleccionado, busqueda]);
+
+  const handleTipoChange = (tipo) => {
+    setTipoSeleccionado(tipo);
+  };
 
   return (
     <>
       <input
         type="text"
-        placeholder="Buscar canción o artista"
+        placeholder="Buscar música, películas..."
         value={busqueda}
         onChange={(e) => setBusqueda(e.target.value)}
         className="c-buscador"
       />
-
+      <Filtro onTipoChange={handleTipoChange} />
       <section className='c-lista'>
         {data.map((item, index) => (
-          <div className='c-lista-pokemon' key={index}>
-            <img
+          <div
+            className='c-lista-item'
+            key={index}
+            onClick={() => navigate(`/Itunes/${item.trackId}`)}
+          >
+            <img 
               src={item.artworkUrl100}
               alt={item.trackName}
-              width='auto'
-              height='60'
+              width='100'
+              height='100'
               loading='lazy'
             />
-            <p><strong>{item.trackName}</strong><br />{item.artistName}</p>
-            <audio controls src={item.previewUrl}></audio>
+            <p>{item.trackName || item.collectionName}</p>
           </div>
         ))}
       </section>

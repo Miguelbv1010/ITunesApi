@@ -1,0 +1,33 @@
+.c-detalle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    background-color: #777777;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 2rem auto;
+  }
+  
+  .c-detalle img {
+    border-radius: 10px;
+    margin-bottom: 1rem;
+  }
+  
+  .c-detalle h2 {
+    margin: 0.5rem 0;
+    color: #1f2937;
+    font-size: 1.8rem;
+  }
+  
+  .c-detalle p {
+    margin: 0.2rem 0;
+    color: #374151;
+  }
+  
+  .c-detalle audio {
+    margin-top: 1rem;
+    width: 100%;
+  }
+  

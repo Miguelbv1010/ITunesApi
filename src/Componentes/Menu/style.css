@@ -1,13 +1,57 @@
-.c-menu{
-    background-color: silver;
-    flex-wrap: wrap;
+/* Estilo del contenedor del menú */
+.c-menu {
+    background: linear-gradient(135deg, #1f2937, #ffffff); /* Fondo degradado */
     position: fixed;
     bottom: 0;
     left: 0;
+    width: 100%;
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    width: 100%;
-    padding: 15px;
-}
+    align-items: center;
+    padding: 1rem;
+    gap: 20px;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3); /* Sombra para dar profundidad */
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+  }
+  
+  /* Estilo de cada botón dentro del menú */
+  .c-menu button {
+    background-color: #ffcd02;
+    color: #1f2937;
+    font-size: 1.1rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra para dar un efecto de profundidad */
+  }
+  
+  /* Efecto hover para los botones */
+  .c-menu button:hover {
+    background-color: #ffb900;
+    transform: scale(1.05); /* Aumento del tamaño para darle efecto */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3); /* Sombra más fuerte al hacer hover */
+  }
+  
+  /* Efecto de enfoque para los botones */
+  .c-menu button:focus {
+    outline: none;
+    background-color: #ffb900;
+    transform: scale(1.05);
+  }
+  
+  /* Diseño responsive (adaptación móvil) */
+  @media (max-width: 768px) {
+    .c-menu {
+      padding: 0.5rem;
+      gap: 15px;
+    }
+  
+    .c-menu button {
+      font-size: 1rem;
+      padding: 8px 15px;
+    }
+  }
+  
