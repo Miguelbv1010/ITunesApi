@@ -1,10 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import { AppContext } from '../../contexto/contexto';
 import './style.css';
 
 function Itunes() {
   const { name } = useParams(); 
   const [cancion, setCancion] = useState(null);
+   const { favoritos, setFavoritos } = useContext(AppContext);
+  const esFavorito = favoritos.some(p => p.id === datapoke.id);
 
   useEffect(() => {
     const fetchCancion = async () => {
@@ -40,6 +43,11 @@ function Itunes() {
           Tu navegador no soporta audio HTML5.
         </audio>
       )}
+
+            <button onClick={toggleFavorito}>
+          {esFavorito ? '❤️' : '🤍'}
+        </button>
+
     </div>
   );
 }

@@ -1,26 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useContext } from 'react';
 import Filtro from '../Filtro';
 import { useNavigate } from "react-router-dom";
+import { AppContext } from '../../contexto/contexto';
 import './style.css';
 
 function Lista() {
-  const [data, setData] = useState([]);
-  const [tipoSeleccionado, setTipoSeleccionado] = useState('All');
-  const [busqueda, setBusqueda] = useState(''); 
+
+  const [busqueda, setBusqueda] = useState('Fied'); 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const obtenerDatos = async () => {
-      if (busqueda.length >= 1) {
-        const tipo = tipoSeleccionado !== 'All' ? `&media=${tipoSeleccionado}` : '';
-        const res = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(busqueda)}${tipo}&limit=30`);
-        const json = await res.json();
-        setData(json.results);
-      }
-    };
 
-    obtenerDatos();
-  }, [tipoSeleccionado, busqueda]);
 
   const handleTipoChange = (tipo) => {
     setTipoSeleccionado(tipo);
