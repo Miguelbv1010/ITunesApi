@@ -8,9 +8,11 @@ import Lista from './Componentes/Lista'
 import Itunes from './Componentes/Itunes' 
 import Usuarios from './Componentes/Usuario'
 import Menu from './Componentes/Menu';
+import { AppProvider } from './Contexto/AppContext';
 
 function App() {
   return (
+    <AppProvider>
     <Router>
       <Menu/>
       <Routes>
@@ -19,9 +21,11 @@ function App() {
         <Route path="/aleatorios" element={<Aleatorios />} />
         <Route path="/capturas" element={<Capturas />} />
         <Route path="/favoritos" element={<Favoritos />} />
-        <Route path="/Itunes/:name" element={<Itunes />} />
+        <Route path="/itunes/:trackId" element={<Itunes />} />
+
       </Routes>
     </Router>
+    </AppProvider>
   )
 }
 

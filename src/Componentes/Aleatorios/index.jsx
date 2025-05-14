@@ -5,7 +5,7 @@ function Aleatorios() {
 
   return (
     <>
-    <h1>aleatorios</h1>
+    <h1>Capturas</h1>
     </>
     )
 }

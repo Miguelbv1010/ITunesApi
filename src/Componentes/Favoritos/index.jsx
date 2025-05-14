@@ -1,33 +1,38 @@
 import { useContext } from 'react';
-import { AppContext } from '../../contexto/contexto';
-import { useNavigate } from "react-router-dom";
-import Itunes from '../Itunes';
+import { useNavigate } from 'react-router-dom';
+import { AppContext } from '../../Contexto/AppContext';
+
 
 function Favoritos() {
+    const { favoritos } = useContext(AppContext); // Solo necesitamos favoritos aquí
+    const navigate = useNavigate();
 
-  const { favoritos, setFavoritos } = useContext(AppContext);
-  const navigate = useNavigate();
-
-  return (
-    <>
-      {favoritos.length === 0 ? (
-        <p>No hay Pokémon favoritos aún.</p>
-      ) : (
-        <div className='c-lista'>
-          {favoritos.map((pokemon, index) => (
-          <div className='c-lista-itunes'
-          onClick={() => navigate(`/Itunes/${Itunes.id}`)}
-          key={index}>
-            <img src={`https://itunes.apple.com/search?term=${encodeURIComponent(busqueda)}${tipo}&limit=30`} 
-                  alt={`Itunes ${Itunes.nombre}`} width='auto' height='60' loading='lazy'
-                />
-            <p>{pokemon.nombre}</p>
-          </div>
-        ))}
+    return (
+        <div className="favoritos-container">
+            {favoritos.length === 0 ? (
+                <p>No tienes favoritos guardados.</p>
+            ) : (
+                <div className="lista-favoritos">
+                    {favoritos.map((item) => (
+                        <div
+                            key={item.trackId}
+                            className="item-favorito"
+                            onClick={() => navigate(`/itunes/${item.trackId}`)}
+                        >
+                            <img
+                                src={item.artworkUrl100}
+                                alt={item.trackName}
+                                width="60"
+                                height="60"
+                                loading="lazy"
+                            />
+                            <p>{item.trackName}</p>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
-      )}
-    </>
-    )
-  }
-  
-  export default Favoritos
+    );
+}
+
+export default Favoritos;

@@ -1,29 +1,48 @@
-import { useState, useEffect,useContext } from 'react';
-import { useParams } from 'react-router-dom';
-import { AppContext } from '../../contexto/contexto';
+import { useState, useEffect, useContext } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { AppContext } from "../../Contexto/AppContext";
 import './style.css';
 
 function Itunes() {
-  const { name } = useParams(); 
+  const { trackId } = useParams(); // Asegúrate de que `trackId` es el parámetro en la URL
   const [cancion, setCancion] = useState(null);
-   const { favoritos, setFavoritos } = useContext(AppContext);
-  const esFavorito = favoritos.some(p => p.id === datapoke.id);
+  const { favoritos, setFavoritos } = useContext(AppContext);
+  const navigate = useNavigate();
+  
+  // Comprobar si la canción es favorita
+  const esFavorito = favoritos.some(p => p.trackId === cancion?.trackId);
 
   useEffect(() => {
     const fetchCancion = async () => {
+      console.log("Track ID:", trackId); // Verifica el trackId
       try {
-        const res = await fetch(`https://itunes.apple.com/lookup?id=${name}`);
+        const res = await fetch(`https://itunes.apple.com/lookup?id=${trackId}`);
         const json = await res.json();
-        setCancion(json.results[0]);
+        console.log("Respuesta de la API:", json); // Verifica la respuesta de la API
+        if (json.results.length > 0) {
+          setCancion(json.results[0]);
+        } else {
+          console.error("No se encontró la canción.");
+        }
       } catch (error) {
         console.error('Error:', error);
       }
     };
 
     fetchCancion();
-  }, [name]);
+  }, [trackId]);
 
-  if (!cancion) return <p>Cargando canción...</p>;
+  if (!cancion) {
+    return <p>Cargando canción...</p>;
+  }
+
+  const toggleFavorito = () => {
+    if (esFavorito) {
+      setFavoritos(favoritos.filter(p => p.trackId !== cancion.trackId));
+    } else {
+      setFavoritos([...favoritos, cancion]);
+    }
+  };
 
   return (
     <div className="c-detalle">
@@ -44,10 +63,9 @@ function Itunes() {
         </audio>
       )}
 
-            <button onClick={toggleFavorito}>
-          {esFavorito ? '❤️' : '🤍'}
-        </button>
-
+      <button onClick={toggleFavorito}>
+        {esFavorito ? '❤️' : '🤍'}
+      </button>
     </div>
   );
 }

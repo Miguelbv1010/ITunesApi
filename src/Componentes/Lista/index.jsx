@@ -1,15 +1,13 @@
-import { useState, useEffect,useContext } from 'react';
+import { useContext } from 'react';
 import Filtro from '../Filtro';
 import { useNavigate } from "react-router-dom";
-import { AppContext } from '../../contexto/contexto';
+import { AppContext } from "../../Contexto/AppContext"; // Asegúrate de que la ruta esté bien
+
 import './style.css';
 
 function Lista() {
-
-  const [busqueda, setBusqueda] = useState('Fied'); 
+  const { data, busqueda, setBusqueda, setTipoSeleccionado } = useContext(AppContext);
   const navigate = useNavigate();
-
-
 
   const handleTipoChange = (tipo) => {
     setTipoSeleccionado(tipo);
